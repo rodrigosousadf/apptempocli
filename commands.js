@@ -15,7 +15,7 @@ const fetchNow = async city => {
     longitude: data.location.lon,
     latitude: data.location.lat,
     temperatura: data.current.temp_c,
-    temperaturefeel: data.current.feelslike_c,
+    sensacao_termica: data.current.feelslike_c,
     umidade: data.current.humidity,
     condições: data.current.condition.text
   };
@@ -25,14 +25,20 @@ const fetchNow = async city => {
 
 const weatherForecast = async city => {
   const response = await fetch(
-    `http://api.apixu.com/v1/current.json?key=${APIXU_KEY}&q=${city}&lang=pt`
+    `http://api.apixu.com/v1/forecast.json?key=${APIXU_KEY}&q=${city}&lang=pt`
   );
 
   const data = await response.json();
 
-  console.log(data.forecast);
+  /*  const previsao = {
+    local: data.location.name,
+    país: data.location.country,
+    condições: data.forecastday.condition.text
+  }; */
+  // dar uma limpada nos dados do forecast
+  console.log(data.forecast.forecastday);
 };
-/* The fetchNow function is an asynchronous function that will return a Promise. It takes the passed city as a parameter in order to make the complete API request. The await operator can only be used inside an asynchronous function and it returns the fulfilled value of the Promise, or the value itself if it's not a Promise.
+/* o fetchNow é uma função assincrona que retorna uma promise. Pega a cidade que passou como parametro pra fazer a requisicao com o API. O operador await  só pode ser usado dentro de uma função assincrona e vai retornar a promessa fulfilled, o valor ou valor mesmo se não for uma promisse.
 
 The now object holds just the necessary information we need from the data returned from the API request. The same thing applies to the weatherForecast function: */
 
